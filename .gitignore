@@ -1,0 +1,5 @@
+# Ignore all virtual environments
+client/venv/
+gateway/*venv/
+__pycache__/
+*.pyc
