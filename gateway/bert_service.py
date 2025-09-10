@@ -26,14 +26,20 @@ def bertscore():
     if not references or not candidates or len(references) != len(candidates):
         return jsonify({'error': 'Invalid input'}), 400
 
-    if language in ["en", "english", "eng"]:
-        model_path = "/home/nils/nilseval/models/models--microsoft--deberta-xlarge-mnli/snapshots/5b07a9086c1dbb79981ff7b05b4d1ad83b3af51c"
+    if language.lower() in ["en", "english", "eng"]:
+        model_name_or_path = "microsoft/deberta-xlarge-mnli"
         num_layers = 40
     else:
-        model_path = "/home/nils/nilseval/models/models--FacebookAI--xlm-roberta-large/snapshots/c23d21b0620b635a76227c604d44e43a9f0ee389"
+        model_name_or_path = "facebook/xlm-roberta-large"
         num_layers = 17
 
-    scorer = BERTScorer(model_type=model_path, num_layers=num_layers, lang=language, rescale_with_baseline=False)
+    # Use transformers to automatically download the model if needed
+    scorer = BERTScorer(
+        model_type=model_name_or_path,
+        num_layers=num_layers,
+        lang=language,
+        rescale_with_baseline=False
+    )
     P, R, F1 = scorer.score(candidates, references) # precision, recall, harmonic mean
     F1 = F1 * 100
     return jsonify({"bert_scores": F1.tolist()})

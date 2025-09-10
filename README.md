@@ -1,5 +1,38 @@
 # Lux-Eval
 
+**Lux-Eval** is a local evaluation suite for Luxembourgish machine translation (MT), inspired by [MATEO](https://mateo.ivdnt.org/) (Vanroy et al., 2023).  
+It provides an easy-to-use client and a Flask-based API for computing a range of MT evaluation metrics, either locally or via a server.
+
+---
+
+## Table of Contents
+- [Features](#features)  
+- [Installation](#installation)  
+- [Getting Started](#getting-started)  
+  - [1. Launch the Gateway](#1-launch-the-gateway)  
+  - [2. Configure the Client](#2-configure-the-client)  
+  - [3. Launch the Client](#3-launch-the-client)  
+  - [Notes](#notes)  
+- [Input Format](#input-format)  
+- [Metrics](#metrics)  
+  - [Reference-based](#reference-based)  
+  - [Quality Estimation](#quality-estimation)  
+- [Score Interpretation](#score-interpretation)  
+  - [Recommendations](#recommendations)  
+- [References](#references)  
+
+---
+
+## Features
+- Evaluate Luxembourgish (lb) → target-language (tgt) MT output (e.g., fr, en, de, pt)  
+- Support for multiple complementary evaluation metrics  
+- System- and segment-level scoring  
+- Visual plots for performance insights  
+- Score interpretation aid  
+- Modular architecture for adding new metrics  
+
+---
+
 ## Installation
 
 ```bash
@@ -15,6 +48,8 @@ chmod +x setup.sh
 # Run the setup script
 ./setup.sh
 ````
+
+Note: To use [COMETKiwi22](https://huggingface.co/Unbabel/wmt22-cometkiwi-da), you may have acknowledge its license on Hugging Face Hub and [log-in into hugging face hub](https://huggingface.co/docs/huggingface_hub/quick-start).
 
 ---
 
@@ -83,4 +118,66 @@ The client will connect to the gateway and start evaluating metrics as configure
 * The gateway must be running before starting the client.
 * For testing on the same machine, you can always use `http://127.0.0.1:5000`.
 
-```
+---
+
+## Input Format
+
+* **Candidate file(s):** MT model outputs (one file per system)
+* **Source file:** original sentences (aligned with candidates)
+* **Reference file:** gold-standard translations (used by reference-based metrics)
+
+> All files must be plain `.txt`, aligned line-by-line (same number of lines, one segment per line).
+
+---
+
+## Metrics
+
+### Reference-based
+
+| Metric                                                    | Description                                       | Reference                         |
+| --------------------------------------------------------- | ------------------------------------------------- | --------------------------------- |
+| [BERTScore](https://github.com/Tiiiger/bert_score)        | Contextualised embeddings for semantic similarity | Zhang et al., 2019                |
+| [BLEURT20](https://huggingface.co/lucadiliello/BLEURT-20) | Trained on human preference data                  | Sellam et al., 2020               |
+| [BLEU](https://github.com/mjpost/sacrebleu)               | N-gram overlap                                    | Papineni et al., 2002; Post, 2018 |
+| [ChrF2](https://github.com/mjpost/sacrebleu)              | Character-level overlap                           | Popović, 2016; Post, 2018         |
+| [TER](https://github.com/mjpost/sacrebleu)                | Edit distance to reference                        | Snover et al., 2006; Post, 2018   |
+
+**Note:** BERTScore uses [xlm-roberta-large](https://huggingface.co/FacebookAI/xlm-roberta-large), except for English it uses [deberta-xlarge-mnli](https://huggingface.co/microsoft/deberta-xlarge-mnli) for English.
+
+### Quality Estimation
+
+| Metric                                                 | Description                                       | Reference                         |
+| ------------------------------------------------------ | ------------------------------------------------- | --------------------------------- |
+| [COMETKiwi22](https://github.com/Unbabel/COMET)        | Trained on human preference data                  | Rei et al., 2022                  |
+| [Luxembedder](https://github.com/fredxlpy/LuxEmbedder) | Luxembourgish sentence embeddings                 | Philippy et al., 2024             |
+
+---
+
+## Score Interpretation
+
+* Results are exported to `.xlsx`, including an **accuracy matrix** with metric scores converted to probability percentages (cf. Kocmi et al., 2024).
+* Matrix interpretation: similar to a correlation matrix; shows likelihood of one system outperforming another.
+* **Note:** Luxembedder is excluded from the accuracy matrix due to conversion tool limitations.
+
+### Recommendations
+
+* For unrelated models: prioritise **BERTScore** and **BLEURT20**.
+* Surface-overlap metrics (BLEU, ChrF2, TER) are limited and not recommended for cross-system comparison.
+* Percentages in **accuracy matrix** do not add up due to conversion tool limitations. Prioritise positive scores (likelihood of model A being better than model B) over negative scores (likelihood of model B being worse than model A).
+* **COMETKiwi22**: not trained on Luxembourgish, included experimentally.
+* **Luxembedder**: promising but unverified; scores min-max-normalised (0.8–1.0 to 0-100 range); can also be used for lb -> tgt.
+
+---
+
+## References
+
+* Kocmi, T., Zouhar, V., Federmann, C., & Post, M. (2024). *Navigating the metrics maze*. arXiv:2401.06760
+* Papineni, K., Roukos, S., Ward, T., & Zhu, W. J. (2002). *BLEU: a method for automatic evaluation of machine translation*. ACL
+* Philippy, F., Guo, S., Klein, J., & Bissyandé, T. F. (2024). *LuxEmbedder*. arXiv:2412.03331
+* Popović, M. (2016). *chrF deconstructed*. WMT
+* Post, M. (2018). *A call for clarity in reporting BLEU scores*. arXiv:1804.08771
+* Rei, R., et al. (2022). *CometKiwi*. arXiv:2209.06243
+* Sellam, T., Das, D., & Parikh, A. P. (2020). *BLEURT*. arXiv:2004.04696
+* Snover, M., et al. (2006). *Translation Edit Rate*. AMTA
+* Vanroy, B., Tezcan, A., & Macken, L. (2023). *MATEO*. EAMT
+* Zhang, T., Kishore, V., Wu, F., Weinberger, K. Q., & Artzi, Y. (2019). *BERTScore*. arXiv:1904.09675

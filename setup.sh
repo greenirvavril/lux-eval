@@ -27,12 +27,18 @@ deactivate
 python3 -m venv bleurt_venv
 source bleurt_venv/bin/activate
 pip install -r bleurt_requirements.txt
+pip install git+https://github.com/lucadiliello/bleurt-pytorch.git
 deactivate
 
 # COMETKiwi22 environment
 python3 -m venv cometkiwi_venv
 source cometkiwi_venv/bin/activate
 pip install -r cometkiwi_requirements.txt
+git clone https://github.com/Unbabel/COMET
+cd COMET
+pip install poetry
+poetry install
+cd ..
 deactivate
 
 # Luxembedder environment

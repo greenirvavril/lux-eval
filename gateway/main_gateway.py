@@ -3,6 +3,8 @@ import requests
 import subprocess
 import time
 import socket
+import threading
+import sys
 
 # -------- Helpers --------
 def get_free_port():
@@ -11,7 +13,7 @@ def get_free_port():
         s.bind(("", 0))
         return s.getsockname()[1]
 
-def wait_for_service(url, timeout=60):
+def wait_for_service(url, timeout=300):
     """Wait until a service responds with 200 OK."""
     start = time.time()
     while time.time() - start < timeout:
@@ -24,25 +26,49 @@ def wait_for_service(url, timeout=60):
         time.sleep(1)
     raise RuntimeError(f"Service at {url} did not start in {timeout}s")
 
+def get_client_accessible_ip():
+    """
+    Get the IP address that clients can use to reach this machine.
+    Works for local or network clients.
+    """
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        # Doesn't actually send data; just used to detect the outbound interface
+        s.connect(("8.8.8.8", 80))
+        ip = s.getsockname()[0]
+    except Exception:
+        ip = "127.0.0.1"
+    finally:
+        s.close()
+    return ip
+
+
+def stream_output(pipe, prefix):
+    """Continuously read subprocess output and print it with a prefix."""
+    for line in iter(pipe.readline, b''):
+        sys.stdout.write(f"[{prefix}] {line.decode(errors='replace')}")
+        sys.stdout.flush()
+    pipe.close()
+
 # -------- Service definitions --------
 SERVICES = {
     "bleurt": {
-        "venv": "./bleurtvenv/bin/python",
+        "venv": "./bleurt_venv/bin/python",
         "script": "bleurt_service.py",
         "endpoints": ["/bleurt20"],
     },
     "bert": {
-        "venv": "./bertvenv/bin/python",
+        "venv": "./bert_venv/bin/python",
         "script": "bert_service.py",
-        "endpoints": ["/bertscore", "/sacrebleu"],  # both handled by the same backend
+        "endpoints": ["/bertscore", "/sacrebleu"],
     },
     "cometkiwi22": {
-        "venv": "./cometkiwivenv/bin/python",
+        "venv": "./cometkiwi_venv/bin/python",
         "script": "cometkiwi_service.py",
         "endpoints": ["/cometkiwi22"],
     },
     "luxembedder": {
-        "venv": "./luxembeddervenv/bin/python",
+        "venv": "./luxembedder_venv/bin/python",
         "script": "luxembedder_service.py",
         "endpoints": ["/luxembedder"],
     },
@@ -56,9 +82,22 @@ for name, cfg in SERVICES.items():
     port = get_free_port()
     ports[name] = port
     print(f"Starting {name.upper()} service on port {port}")
-    proc = subprocess.Popen([cfg["venv"], cfg["script"], str(port)])
+
+    proc = subprocess.Popen(
+        [cfg["venv"], cfg["script"], str(port)],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        bufsize=1
+    )
     processes[name] = proc
+
+    # Start background threads to capture logs
+    threading.Thread(target=stream_output, args=(proc.stdout, f"{name.upper()}-OUT"), daemon=True).start()
+    threading.Thread(target=stream_output, args=(proc.stderr, f"{name.upper()}-ERR"), daemon=True).start()
+
+    # Wait for service readiness
     wait_for_service(f"http://localhost:{port}/")
+    print(f"{name.upper()} service is ready on port {port}")
 
 # -------- Flask gateway --------
 app = Flask(__name__)
@@ -88,6 +127,10 @@ for service_name, cfg in SERVICES.items():
 # -------- Entry point --------
 if __name__ == '__main__':
     try:
+        client_ip = get_client_accessible_ip()
+        print("Gateway is running!")
+        print(f"  - Local access (same machine): http://127.0.0.1:5000")
+        print(f"  - Network access (other machines should use this IP): http://{client_ip}:5000")
         app.run(host='0.0.0.0', port=5000, debug=True)
     finally:
         for proc in processes.values():
