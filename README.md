@@ -49,7 +49,7 @@ chmod +x setup.sh
 ./setup.sh
 ````
 
-Note: To use [COMETKiwi22](https://huggingface.co/Unbabel/wmt22-cometkiwi-da), you may have acknowledge its license on Hugging Face Hub and [log-in into hugging face hub](https://huggingface.co/docs/huggingface_hub/quick-start).
+Note: To use [COMETKiwi22](https://huggingface.co/Unbabel/wmt22-cometkiwi-da), you may have to acknowledge its license on Hugging Face Hub and [log-in into hugging face hub](https://huggingface.co/docs/huggingface_hub/quick-start).
 
 ---
 
