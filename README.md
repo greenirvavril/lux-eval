@@ -34,6 +34,7 @@ It provides an easy-to-use client and a Flask-based API for computing a range of
 ---
 
 ## Installation: Client
+Install the client on your local machine:
 
 ```bash
 # Clone the Lux-Eval repository
