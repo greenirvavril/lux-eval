@@ -33,7 +33,7 @@ It provides an easy-to-use client and a Flask-based API for computing a range of
 
 ---
 
-## Installation
+## Installation: Client
 
 ```bash
 # Clone the Lux-Eval repository
@@ -43,10 +43,27 @@ git clone https://github.com/greenirvavril/lux-eval.git
 cd lux-eval
 
 # Make the setup script executable
-chmod +x setup.sh
+chmod +x setup_client.sh
 
 # Run the setup script
-./setup.sh
+./setup_client.sh
+````
+
+## Installation: Gateway
+Install the gateway either on your local machine or on your server:
+
+```bash
+# Clone the Lux-Eval repository
+git clone https://github.com/greenirvavril/lux-eval.git
+
+# Navigate into the project directory
+cd lux-eval
+
+# Make the setup script executable
+chmod +x setup_gateway.sh
+
+# Run the setup script
+./setup_gateway.sh
 ````
 
 Note: To use [COMETKiwi22](https://huggingface.co/Unbabel/wmt22-cometkiwi-da), you may have to acknowledge its license on Hugging Face Hub and [log-in into hugging face hub](https://huggingface.co/docs/huggingface_hub/quick-start).
