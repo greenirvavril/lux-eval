@@ -187,8 +187,6 @@ def luxeval(sacrebleu: bool,
         with open(source_path, "r") as file:
             source_lines = [line.strip() for line in file.readlines()]
 
-    # TODO: adjust the rest of the script so that it works even if source or reference is not provided
-
     # Prepare metric DataFrames for Excel export
     df_dict = {}
     for metric_name, enabled in metric_flags.items():
