@@ -54,12 +54,6 @@ chmod +x setup_client.sh
 Install the gateway either on your local machine or on your server:
 
 ```bash
-# Clone the Lux-Eval repository
-git clone https://github.com/greenirvavril/lux-eval.git
-
-# Navigate into the project directory
-cd lux-eval
-
 # Make the setup script executable
 chmod +x setup_gateway.sh
 
