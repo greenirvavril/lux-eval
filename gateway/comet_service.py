@@ -6,7 +6,7 @@ import sys
 from waitress import serve
 
 # Run on GPU 0
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+#os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 app = Flask(__name__)
 port = int(sys.argv[1]) if len(sys.argv) > 1 else 5008
@@ -35,7 +35,7 @@ def cometscore():
     ]
 
     # Load and run the model
-    model_output = model.predict(eval_data, batch_size=8, gpus=1)
+    model_output = model.predict(eval_data, batch_size=8, gpus=1) # may have to adjust number of gpus depending on your system
 
     # Extract scores
     # model_output is typically a list of dicts like [{'score': 0.8732}, ...]
