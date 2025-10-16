@@ -26,8 +26,9 @@ It provides an easy-to-use client and a Flask-based API for computing a range of
 ## Features
 - Evaluate Luxembourgish (lb) → target-language (tgt) MT output (e.g., fr, en, de, pt)  
 - Support for multiple complementary evaluation metrics  
-- System- and segment-level scoring  
-- Visual plots for performance insights  
+- System- and segment-level scoring
+- Visual plots for performance insights
+- Performs paired bootstrap resampling to test statistical significance
 - Score interpretation aid  
 - Modular architecture for adding new metrics  
 
