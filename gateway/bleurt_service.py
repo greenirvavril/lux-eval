@@ -29,7 +29,7 @@ def bleurtscore():
 
     res = scorer.score(references=references, candidates=candidates)
     for i in range(len(res)):
-        res[i] = max(0, min(res[i] * 100, 100))
+        res[i] = res[i] * 100
     return jsonify({'bleurt_scores': res})
 
 if __name__ == "__main__":
