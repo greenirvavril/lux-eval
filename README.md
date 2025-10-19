@@ -189,6 +189,6 @@ The client will connect to the gateway and start evaluating metrics as configure
 * Popović, M. (2016). *chrF deconstructed*. WMT
 * Post, M. (2018). *A call for clarity in reporting BLEU scores*. arXiv:1804.08771
 * Sellam, T., Das, D., & Parikh, A. P. (2020). *BLEURT*. arXiv:2004.04696
-* Snover, M., et al. (2006). *Translation Edit Rate*. AMTA
+* Snover, M., Dorr, B., Schwartz, R., Micciulla, L., & Makhoul, J. (2006). A study of translation edit rate with targeted human annotation. In Proceedings of the 7th Conference of the Association for Machine Translation in the Americas: Technical Papers (pp. 223-231).
 * Vanroy, B., Tezcan, A., & Macken, L. (2023). *MATEO*. EAMT
 * Zhang, T., Kishore, V., Wu, F., Weinberger, K. Q., & Artzi, Y. (2019). *BERTScore*. arXiv:1904.09675
