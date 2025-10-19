@@ -182,13 +182,13 @@ The client will connect to the gateway and start evaluating metrics as configure
 ---
 
 ## References
-* Guerreiro, N. M., Rei, R., Stigt, D. V., Coheur, L., Colombo, P., & Martins, A. F. (2024). *xcomet: Transparent machine translation evaluation through fine-grained error detection. Transactions of the Association for Computational Linguistics*, 12, 979-995.
-* Kocmi, T., Zouhar, V., Federmann, C., & Post, M. (2024). *Navigating the metrics maze*. arXiv:2401.06760
-* Papineni, K., Roukos, S., Ward, T., & Zhu, W. J. (2002). *BLEU: a method for automatic evaluation of machine translation*. ACL
-* Philippy, F., Guo, S., Klein, J., & Bissyandé, T. F. (2024). *LuxEmbedder*. arXiv:2412.03331
-* Popović, M. (2016). *chrF deconstructed*. WMT
-* Post, M. (2018). *A call for clarity in reporting BLEU scores*. arXiv:1804.08771
-* Sellam, T., Das, D., & Parikh, A. P. (2020). *BLEURT*. arXiv:2004.04696
+* Guerreiro, N. M., Rei, R., Stigt, D. V., Coheur, L., Colombo, P., & Martins, A. F. (2024). xcomet: Transparent machine translation evaluation through fine-grained error detection. Transactions of the Association for Computational Linguistics, 12, 979-995.
+* Kocmi, T., Zouhar, V., Federmann, C., & Post, M. (2024). Navigating the metrics maze: Reconciling score magnitudes and accuracies. arXiv preprint arXiv:2401.06760.
+* Papineni, K., Roukos, S., Ward, T., & Zhu, W. J. (2002, July). Bleu: a method for automatic evaluation of machine translation. In Proceedings of the 40th annual meeting of the Association for Computational Linguistics (pp. 311-318).
+* Philippy, F., Guo, S., Klein, J., & Bissyandé, T. F. (2024). LuxEmbedder: A cross-lingual approach to enhanced Luxembourgish sentence embeddings. arXiv preprint arXiv:2412.03331.
+* Popović, M. (2016, August). chrF deconstructed: beta parameters and n-gram weights. In Proceedings of the First Conference on Machine Translation: Volume 2, Shared Task Papers (pp. 499-504).
+* Post, M. (2018). A call for clarity in reporting BLEU scores. arXiv preprint arXiv:1804.08771.
+* Sellam, T., Das, D., & Parikh, A. P. (2020). BLEURT: Learning robust metrics for text generation. arXiv preprint arXiv:2004.04696.
 * Snover, M., Dorr, B., Schwartz, R., Micciulla, L., & Makhoul, J. (2006). A study of translation edit rate with targeted human annotation. In Proceedings of the 7th Conference of the Association for Machine Translation in the Americas: Technical Papers (pp. 223-231).
-* Vanroy, B., Tezcan, A., & Macken, L. (2023). *MATEO*. EAMT
-* Zhang, T., Kishore, V., Wu, F., Weinberger, K. Q., & Artzi, Y. (2019). *BERTScore*. arXiv:1904.09675
+* Vanroy, B., Tezcan, A., & Macken, L. (2023). MATEO: MAchine Translation Evaluation Online. In M. Nurminen, J. Brenner, M. Koponen, S. Latomaa, M. Mikhailov, F. Schierl, … H. Moniz (Eds.), Proceedings of the 24th Annual Conference of the European Association for Machine Translation (pp. 499–500). Tampere, Finland: European Association for Machine Translation (EAMT).
+* Zhang, T., Kishore, V., Wu, F., Weinberger, K. Q., & Artzi, Y. (2019). Bertscore: Evaluating text generation with bert. arXiv preprint arXiv:1904.09675.
