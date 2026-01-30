@@ -15,7 +15,7 @@ def health():
     return "BLEURT service is running", 200
 
 
-checkpoint = "/home/nils/nilseval/bleurt-20-new/bleurt/BLEURT-20"
+checkpoint = "" # ENTER CHECKPOINT
 scorer = score.BleurtScorer(checkpoint)
 
 @app.route('/bleurt20', methods=['POST'])
